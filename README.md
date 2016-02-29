@@ -20,7 +20,7 @@
 # Assign to model
 For example Article model
 ```ruby
-  add_seo :articles, :show, :id do
+  add_seo :articles, :show, :id
 ```
 
 `:articles` - controller name 
