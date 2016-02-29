@@ -1,19 +1,18 @@
-module Seo
-  class PagesController < ApplicationController
+  class Seo::PagesController < Seo::ApplicationController
     add_breadcrumb 'Pages', :pages_path
     skip_authorization_check if self.respond_to?(:skip_authorization_check)
 
     def index
-      @pages = Page.all
+      @pages = Seo::Page.all
     end
 
     def edit
-      @page = Page.find(params[:id])
+      @page = Seo::Page.find(params[:id])
       add_breadcrumb @page.name
     end
 
     def update
-      @page = Page.find(params[:id])
+      @page = Seo::Page.find(params[:id])
       if @page.update(page_params)
         flash[:success] = 'Page saved successfully'
         redirect_to action: :edit
@@ -23,7 +22,7 @@ module Seo
     end
 
     def destroy
-      Page.find(params[:id]).destroy
+      Seo::Page.find(params[:id]).destroy
       redirect_to action: :index
     end
 
@@ -34,4 +33,3 @@ module Seo
       params.require(:page).permit(:name, seo_attributes: seo)
     end
   end
-end
