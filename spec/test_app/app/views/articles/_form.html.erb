@@ -1,0 +1,14 @@
+<%= simple_form_for(@article) do |f| %>
+  <%= f.input :title %>
+  <%= f.input :content %>
+  <div class="col-sm-offset-1">
+    <%= f.simple_fields_for :seo do |seo_form| %>
+      <%= multilang_wrapper(:title) { |attribute| seo_form.input attribute } %>
+      <%= multilang_wrapper(:description) { |attribute| seo_form.input attribute, as: :text } %>
+      <%= multilang_wrapper(:keywords) { |attribute| seo_form.input attribute } %>
+      <%= multilang_wrapper(:seo_text) { |attribute| seo_form.input attribute, as: :text } %>
+    <% end %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

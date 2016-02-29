@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    meta charset='utf-8'
+    title Seo App
+    meta name='viewport' content='width=device-width, initial-scale=1'
+
+    = stylesheet_link_tag 'seo/application', media: 'all'
+    = favicon_link_tag '/favicon.ico'
+    = csrf_meta_tags
+
+  body.tooltips
+    .container
+      .content-page
+        .header.content.rows-content-header
+          div[class="navbar navbar-default" role="navigation"]
+            .container
+              .navbar-collapse.collapse
+                ul class="nav navbar-nav"
+                  li
+                    a href="#{main_app.send(Seo.app_path.to_sym)}"
+        .body.content.rows.scroll-y.multilang
+          .bread-container
+            == render 'seo/partials/flash_message'
+            ul.breadcrumb
+              = render_breadcrumbs tag: :li, separator: ''
+          == yield
+
+          .available_locales data-locales="#{I18n.available_locales.to_json}"
+          = javascript_include_tag 'seo/application'

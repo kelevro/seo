@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= header_meta_tags %>
+</head>
+<body>
+
+<div class="container">
+  <div class="header content rows-content-header">
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-collapse collapse">
+          <div class="nav navbar-nav">
+            <li><a href="<%= main_app.send(Seo.app_path.to_sym) %>"></a></li>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= yield %>
+</div>
+
+<%= javascript_include_tag 'application'%>
+</body>
+</html>
