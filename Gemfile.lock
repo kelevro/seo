@@ -13,6 +13,20 @@ GIT
       activerecord (>= 3.2, < 6.0)
       rake (~> 10.4)
 
+GIT
+  remote: git://github.com/kelevro/multilang_field.git
+  revision: 100548f4a638deef2b3b8ae67016acec33a8bf21
+  specs:
+    multilang_field (0.0.1)
+      bootstrap-sass
+      globalize
+      globalize-accessors
+      jquery-rails
+      rails
+      sass-rails
+      simple_form
+      slim
+
 PATH
   remote: .
   specs:
@@ -24,19 +38,6 @@ PATH
       globalize-accessors
       meta-tags
       multilang_field
-      rails
-      sass-rails
-      simple_form
-      slim
-
-PATH
-  remote: /Users/antoxa/dev/ruby/gems/multilang_field
-  specs:
-    multilang_field (0.0.1)
-      bootstrap-sass
-      globalize
-      globalize-accessors
-      jquery-rails
       rails
       sass-rails
       simple_form
