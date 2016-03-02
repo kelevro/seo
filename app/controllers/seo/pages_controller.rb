@@ -9,6 +9,8 @@
     def edit
       authorize! :update, :seo_pages
       @page = Seo::Page.find(params[:id])
+      @page.init_seo
+      @seo = @page.seo_records.first
       add_breadcrumb @page.name
     end
 
@@ -33,6 +35,6 @@
 
     def page_params
       seo = Seo::Record.globalize_attribute_names + [:id]
-      params.require(:page).permit(:name, seo_attributes: seo)
+      params.require(:page).permit(:name, seo_records_attributes: seo)
     end
   end

@@ -3,7 +3,7 @@
 
   = simple_form_for @page do |f|
     = f.input :name
-    = f.simple_fields_for :seo do |sf|
+    = f.simple_fields_for :seo_records, @seo do |sf|
       = multilang_wrapper(:title) { |attr| sf.input attr }
       = multilang_wrapper(:description) { |attr| sf.input attr, as: :text }
       = multilang_wrapper(:keywords) { |attr| sf.input attr }
