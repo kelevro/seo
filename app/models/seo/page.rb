@@ -11,7 +11,7 @@
 module Seo
   class Page < ::ActiveRecord::Base
     add_seo
-    has_one :seo_model, class_name: 'Seo::Model'
+    has_one :seo_model, class_name: 'Seo::Model', dependent: :destroy
 
     def self.create_seo(params)
       page = self.create!(name: build_name(params[:controller], params[:action]))

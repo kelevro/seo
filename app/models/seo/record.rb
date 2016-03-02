@@ -20,6 +20,8 @@ module Seo
     before_validation :add_validators
     after_validation :clear_validators
 
+    scope :action, -> (action) { where(action: action).order(:id) if action.present? }
+
     def add_validators
       return if seoable_type.blank?
       model = seoable_type.constantize
@@ -32,10 +34,10 @@ module Seo
     end
 
     def header_attributes
-      attrs = {}
-      attrs[:title] = title if title.present?
+      attrs               = {}
+      attrs[:title]       = title if title.present?
       attrs[:description] = description if description.present?
-      attrs[:keywords] = keywords if keywords.present?
+      attrs[:keywords]    = keywords if keywords.present?
       attrs
     end
   end

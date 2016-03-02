@@ -1,11 +1,11 @@
 
-.box-info.full.languages-list
+.full.seo-pages.box-info
   .table-responsive
     table.table.table-hover
       tbody
         - @pages.each do |page|
           tr
-            td.col-sm-8
+            td.col-sm-7
               = link_to(page.name, edit_page_path(page))
             td.col-sm-2
               = render 'actions', page: page

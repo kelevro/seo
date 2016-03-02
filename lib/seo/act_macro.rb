@@ -1,13 +1,21 @@
 module Seo
   module ActMacro
+
     def add_seo(*args, &block)
       unless self == Seo::Page
         raise ArgumentError unless validate_args(args)
-        create_model(args) unless exists_model(args)
+
+        if args.second.is_a? Array
+          args.second.each do |action|
+            create_model(args.first, action, args.third) unless exists_model(args.first, action, args.third)
+          end
+        else
+          create_model(args.first, args.second, args.third) unless exists_model(args.first, args.second, args.third)
+        end
+
       end
-      has_one :seo, class_name: 'Seo::Record', as: :seoable
-      accepts_nested_attributes_for :seo
-      init_seo_model
+      has_many :seo_records, class_name: 'Seo::Record', as: :seoable, dependent: :destroy
+      accepts_nested_attributes_for :seo_records
       @validation_block = block if block.present?
     end
 
@@ -15,16 +23,18 @@ module Seo
       @validation_block
     end
 
+
     private
 
-    def create_model(args)
-      Seo::Model.create!(model:  self.to_s, controller: args.first,
-                         action: args.second, param_name: args.third)
+    def create_model(controller, action, param_name)
+      clear(controller, action)
+      Seo::Model.create!(model:  self.to_s, controller: controller,
+                         action: action, param_name: param_name)
     end
 
-    def exists_model(args)
-      Seo::Model.where(model:  self.to_s, controller: args.first,
-                       action: args.second, param_name: args.third).exists?
+    def exists_model(controller, action, param_name)
+      Seo::Model.where(model:      self.to_s, controller: controller,
+                       param_name: param_name, action: action).exists?
     end
 
     def validate_args(args)
@@ -33,14 +43,11 @@ module Seo
       true
     end
 
-    def init_seo_model
-      after_initialize do |model|
-        if model.seo.blank?
-          build_seo
-        else
-          model.seo
-        end
-      end
+    def clear(controller, action)
+      model = Seo::Model.where(model:      Seo::Page.to_s,
+                               controller: controller,
+                               action:     action).take
+      model.destroy if model.present?
     end
   end
 end

@@ -23,14 +23,28 @@ body.tooltips{
   }
 }
 
-.seo{
+.body.content.rows.seo{
+
+  padding-left: 70px;
+  padding-right: 70px;
+
   .bread-container{
+
     .breadcrumb {
       padding: 8px 15px;
       margin-bottom: 20px;
       list-style: none;
       background-color: #f5f5f5;
       border-radius: 4px;
+    }
+  }
+
+  .box-info.seo-pages {
+    tr {
+      td {
+        padding-left: 30px;
+      }
+      padding-bottom: 10px;
     }
   }
 }

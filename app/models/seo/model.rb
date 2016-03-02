@@ -14,22 +14,34 @@
 module Seo
   class Model < ::ActiveRecord::Base
 
-    belongs_to :page, class_name: 'Seo::Page'
+    belongs_to :page, class_name: 'Seo::Page', dependent: :destroy
 
-    def self.params(params)
-      where(controller: params[:controller], action: params[:action])
-    end
+    scope :model, -> (model) { where(model: model.to_s).order(:id) }
+    scope :params, -> (params) { where(controller: params[:controller], action: params[:action]) }
 
     def record(params)
       if static_page?
-        page.seo
+        page.seo_records.first
       else
-        Record.where(seoable_id:   params[self.param_name.to_sym],
-                     seoable_type: self.model).take
+        load_seo(params)
       end
     end
 
     private
+
+    def load_seo(params)
+      query_param = {}
+      param       = params[self.param_name.to_sym]
+      model_class = self.model.constantize
+      if param.to_i == 0
+        query_param[self.param_name.to_sym] = param
+      else
+        query_param[:id] = param.to_i
+      end
+
+      model_class.find_by(query_param)
+        .seo_records.action(params[:action]).first
+    end
 
     def static_page?
       self.model == 'Seo::Page'
