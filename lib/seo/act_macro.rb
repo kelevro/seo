@@ -2,6 +2,7 @@ module Seo
   module ActMacro
 
     def add_seo(*args, &block)
+      return unless Seo::Model.table_exists?
       unless self == Seo::Page
         raise ArgumentError unless validate_args(args)
 
@@ -12,7 +13,6 @@ module Seo
         else
           create_model(args.first, args.second, args.third) unless exists_model(args.first, args.second, args.third)
         end
-
       end
       has_many :seo_records, class_name: 'Seo::Record', as: :seoable, dependent: :destroy
       accepts_nested_attributes_for :seo_records
