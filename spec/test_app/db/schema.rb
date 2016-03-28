@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227150819) do
+ActiveRecord::Schema.define(version: 20160301191437) do
 
   create_table "article_without_seos", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -63,8 +63,10 @@ ActiveRecord::Schema.define(version: 20160227150819) do
     t.string   "seoable_type", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "action"
   end
 
+  add_index "seo_records", ["action"], name: "index_seo_records_on_action"
   add_index "seo_records", ["seoable_id", "seoable_type"], name: "index_seo_records_on_seoable_id_and_seoable_type"
 
 end
