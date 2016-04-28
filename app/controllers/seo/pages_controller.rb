@@ -9,7 +9,7 @@
     def edit
       authorize! :update, :seo_pages
       @page = Seo::Page.find(params[:id])
-      @page.init_seo
+      @page.create_seo
       @seo = @page.seo_records.first
       add_breadcrumb @page.name
     end

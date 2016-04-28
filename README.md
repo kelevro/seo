@@ -23,7 +23,7 @@ For example Article model
   add_seo :articles, :show, :id
 ```
 
-`:articles` - controller name 
+`:articles` - controller name
 `:show` - action name
 `:id` - param name
 

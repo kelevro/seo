@@ -91,6 +91,7 @@ GEM
     breadcrumbs_on_rails (2.3.1)
     builder (3.2.2)
     byebug (8.2.2)
+    cancancan (1.13.1)
     capybara (2.6.2)
       addressable
       mime-types (>= 1.16)
@@ -228,6 +229,7 @@ DEPENDENCIES
   annotate!
   bootstrap-sass
   breadcrumbs_on_rails
+  cancancan
   capybara
   database_cleaner
   factory_girl_rails
