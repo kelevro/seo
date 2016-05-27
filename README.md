@@ -1,19 +1,22 @@
 # Seo
 
-This gem provides a web interface for managing translations for your website
+This gem provides a web interface for managing SEO information for each of your page, post, etc...
 
 ####It allows:
 
-* Search by key
-* Search for text translation
-* Adding and editing languages
-* Adding and editing keys
-* Remove language or key
+* Automatically add 'title', 'description', 'keywords' to pages
+* Managing 'seo_text' in views
+
+### Dependecy
+```ruby
+  gem 'multilang_field', github: 'kelevro/multilang_field'
+  gem 'slim'
+  gem 'meta-tags'
+```
 
 ### Install
 ```ruby
   gem 'seo', github: 'kelevro/seo'
-  gem 'multilang_field', github: 'kelevro/multilang_field'
 ```
 
 ### Migrations
@@ -25,6 +28,14 @@ This gem provides a web interface for managing translations for your website
 ### Routes
 ```ruby
   mount Seo::Engine => '/seo'
+```
+
+###Controller
+```ruby
+class ArticlesController < ApplicationController
+  enable_seo only: [:index]
+  ...
+end
 ```
 
 ### Assign to model
@@ -46,7 +57,23 @@ If you need validation to seo data
   end
 ```
 
-####example add to seo Articles:
+### Layouts
+in `<head>` add:
+
+```ruby
+<%= header_meta_tags %>
+```
+
+###Accsess
+```ruby
+can :update, :seo_pages
+can :destroy	, :seo_pages
+```
+### Usage
+
+![Usage](vendor/assets/images/use_seo.gif)
+
+####Example add to seo Articles:
 
 ```ruby
 Rails.application.routes.draw do
@@ -80,7 +107,7 @@ class ArticlesController < ApplicationController
 	def seo_params(class_name)
        params
        .require(class_name.to_s.underscore.to_sym)
-       .permit(seo_attributes: build_seo_params)
+       .permit(seo_records_attributes: build_seo_params)
   	end
 	...
 end
@@ -93,7 +120,6 @@ In view
 	form_url:   update_seo_article_path(@article),
 	action_url: :seo_article_path,
 	actions:    @article.seo_records.map(&:action) %>
-</div>
 ```
 Partial:
 
@@ -111,9 +137,9 @@ Partial:
   </div>
 
   <%= f.simple_fields_for :seo_records, @seo do |seo_form| %>
-    <%= multilang_wrapper(:title) { |attribute| seo_form.input attribute, disabled: true } %>
-    <%= multilang_wrapper(:description) { |attribute| seo_form.input attribute, as: :text, disabled: true } %>
-    <%= multilang_wrapper(:keywords) { |attribute| seo_form.input attribute, disabled: true } %>
+    <%= multilang_wrapper(:title) { |attribute| seo_form.input attribute } %>
+    <%= multilang_wrapper(:description) { |attribute| seo_form.input attribute, as: :text } %>
+    <%= multilang_wrapper(:keywords) { |attribute| seo_form.input attribute } %>
     <%= multilang_wrapper(:seo_text) { |attribute| seo_form.input attribute, as: :text, input_html: { rows: 10 } } %>
     <%= seo_form.input :action, as: :hidden %>
     <%= f.submit 'Save', class: 'btn btn-success col-sm-offset-2 col-sm-2' %>
