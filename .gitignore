@@ -4,6 +4,9 @@ pkg/
 spec/test_app/config/database.yml
 spec/test_app/log/*.log
 spec/test_app/tmp/
+spec/test_app/db/*.sqlite3
 spec/test_app/.sass-cache
 .idea
+.tags
+.tags_sorted_by_file
 *.DS_Store

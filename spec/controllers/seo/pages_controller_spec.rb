@@ -1,25 +1,25 @@
 require 'rails_helper'
 
 module Seo
-  RSpec.describe PagesController, type: :controller do
+  describe PagesController, type: :controller do
 
-    describe "GET #index" do
-      it "returns http success" do
+    describe 'GET #index' do
+      it 'returns http success' do
         get :index
         expect(response).to have_http_status(:success)
       end
     end
 
-    describe "GET #edit" do
-      it "returns http success" do
+    describe 'GET #edit' do
+      it 'returns http success' do
         get :edit
         expect(response).to have_http_status(:success)
       end
     end
 
-    describe "GET #update" do
-      it "returns http success" do
-        get :update
+    describe 'GET #update' do
+      it 'returns http success' do
+        update :update
         expect(response).to have_http_status(:success)
       end
     end

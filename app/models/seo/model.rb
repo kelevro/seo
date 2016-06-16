@@ -29,6 +29,7 @@ module Seo
 
     private
 
+    # TODO: refactoring this code
     def load_seo(params)
       query_param = {}
       param       = params[self.param_name.to_sym]
