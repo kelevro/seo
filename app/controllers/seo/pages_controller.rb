@@ -2,12 +2,10 @@
     add_breadcrumb 'Pages', :pages_path
 
     def index
-      authorize! :update, :seo_pages
       @pages = Seo::Page.all
     end
 
     def edit
-      authorize! :update, :seo_pages
       @page = Seo::Page.find(params[:id])
       @page.create_seo
       @seo = @page.seo_records.first
@@ -15,7 +13,6 @@
     end
 
     def update
-      authorize! :update, :seo_pages
       @page = Seo::Page.find(params[:id])
       if @page.update(page_params)
         flash[:success] = 'Page saved successfully'
@@ -26,7 +23,6 @@
     end
 
     def destroy
-      authorize! :destroy, :seo_pages
       Seo::Page.find(params[:id]).destroy
       redirect_to action: :index
     end
