@@ -20,7 +20,9 @@ module Seo
     before_validation :add_validators
     after_validation :clear_validators
 
-    scope :action, -> (action) { where(action: action).order(:id) if action.present? }
+    scope :action, -> (action) do
+      where(action: action).order(:id) if action.present?
+    end
 
     def add_validators
       return if seoable_type.blank?

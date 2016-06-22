@@ -14,10 +14,11 @@
 require 'rails_helper'
 
 module Seo
-  RSpec.describe Model, type: :model do
+  describe Model, type: :model do
     describe '#record' do
       context 'static model' do
         let(:params) { { controller: :articles, action: :index } }
+
         before do
           @page = Seo::Page.create_seo(params)
         end

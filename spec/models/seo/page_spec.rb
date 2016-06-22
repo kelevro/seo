@@ -11,7 +11,7 @@
 require 'rails_helper'
 
 module Seo
-  RSpec.describe Page, type: :model do
+  describe Page, type: :model do
     describe '.create_seo' do
       let(:params) { { controller: :articles, action: :index } }
 
@@ -43,7 +43,7 @@ module Seo
       it 'will have seo relation' do
         page = described_class.create_seo(params)
         seo = Seo::Record.last
-        expect(page.seo).to eq(seo)
+        expect(page.seo_records.first).to eq(seo)
       end
     end
   end

@@ -38,8 +38,7 @@ module Seo
     end
 
     def validate_args(args)
-      return false if args.blank?
-      return false if args.count != 3
+      return false if args.blank? || args.count != 3
       true
     end
 

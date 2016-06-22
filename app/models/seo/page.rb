@@ -17,10 +17,10 @@ module Seo
       page = self.create!(name: build_name(params[:controller], params[:action]))
 
       Seo::Model.create!(model:  Seo::Page.to_s, controller: params[:controller],
-                        action: params[:action], page_id: page.id)
+                         action: params[:action], page_id: page.id)
 
-      Seo::Record.new(seoable_id:   page.id,
-                      seoable_type: page.class.to_s)
+      Seo::Record.create(seoable_id:   page.id,
+                         seoable_type: page.class.to_s)
       page
     end
 

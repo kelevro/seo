@@ -7,29 +7,29 @@ describe ArticleWithoutSeo do
     end
 
     it 'will create new record Seo::Model' do
-      expect{ described_class.add_seo :articles, :show, :id }
-        .to change{ Seo::Model.count }.by(1)
+      expect { described_class.add_seo :articles, :show, :id }
+        .to change { Seo::Model.count }.by(1)
     end
 
     it 'will raise ArgumentError' do
-      expect{ described_class.add_seo :articles, :show}
+      expect { described_class.add_seo :articles, :show }
         .to raise_error(ArgumentError)
     end
 
     it 'will not create new record Seo::Model if exists' do
       described_class.add_seo(:articles, :show, :id)
-      expect{ described_class.add_seo(:articles, :show, :id) }
-        .to_not change{ Seo::Model.count }
+      expect { described_class.add_seo(:articles, :show, :id) }
+        .to_not change { Seo::Model.count }
     end
 
     it 'will have have_one relation to Seo::Record' do
       described_class.add_seo(:articles, :show, :id)
-      is_expected.to have_one(:seo)
+      is_expected.to have_many(:seo_records)
     end
 
     it 'will add Seo::Record as nested model' do
       described_class.add_seo(:articles, :show, :id)
-      is_expected.to accept_nested_attributes_for(:seo)
+      is_expected.to accept_nested_attributes_for(:seo_records)
     end
 
     it 'will have not validators' do
@@ -41,7 +41,7 @@ describe ArticleWithoutSeo do
         validates :title, presence: true
       end
       allow_any_instance_of(Seo::Record).to receive(:clear_validators)
-      described_class.new(seo_attributes: {}).valid?
+      described_class.new(seo_records_attributes: [{}]).valid?
       expect(Seo::Record.validators.count).to eq(1)
     end
 
@@ -50,7 +50,8 @@ describe ArticleWithoutSeo do
       described_class.add_seo(:articles, :show, :id) do
         validates :title, presence: true
       end
-      described_class.new(seo_attributes: {}).valid?
+
+      described_class.new(seo_records_attributes: [{ title: 'hello' }]).valid?
       expect(Seo::Record.validators.count).to eq(0)
     end
 
@@ -58,7 +59,8 @@ describe ArticleWithoutSeo do
       described_class.add_seo(:articles, :show, :id) do
         validates :title, presence: true
       end
-      expect(described_class.new(seo_attributes: {}).valid?).to be_falsey
+      expect(described_class.new(seo_records_attributes: [{}]).valid?)
+        .to be_falsey
     end
 
     it 'will correct work with several calls' do
@@ -70,23 +72,22 @@ describe ArticleWithoutSeo do
 
     it 'will init seo relation model' do
       described_class.add_seo(:articles, :show, :id)
-      expect(described_class.new.seo).to be_instance_of Seo::Record
-    end
-
-    it 'will set default params to seo relation model' do
-      described_class.add_seo(:articles, :show, :id)
-      article = described_class.new
-      expect(article.seo.controller).to eq('articles')
-      expect(article.seo.action).to eq('show')
-      expect(article.seo.param_name).to eq('id')
+      expect(described_class.create.create_seo.first)
+        .to be_instance_of(Seo::Record)
     end
 
     it 'will set default params to seo relation model' do
       described_class.add_seo(:articles, :show, :id)
       article = described_class.create
-      expect(article.seo.controller).to eq('articles')
-      expect(article.seo.action).to eq('show')
-      expect(article.seo.param_name).to eq('id')
+      article.create_seo
+      expect(article.seo_records.first.action).to eq('show')
+    end
+
+    it 'will set default params to seo relation model' do
+      described_class.add_seo(:articles, :show, :id)
+      article = described_class.create
+      article.create_seo
+      expect(article.seo_records.first.action).to eq('show')
     end
 
     it 'will be' do

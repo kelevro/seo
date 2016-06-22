@@ -14,7 +14,7 @@
 module Seo
   class Model < ::ActiveRecord::Base
 
-    belongs_to :page, class_name: 'Seo::Page', dependent: :destroy
+    belongs_to :page, class_name: 'Seo::Page'
 
     scope :model, -> (model) { where(model: model.to_s).order(:id) }
     scope :params, -> (params) { where(controller: params[:controller], action: params[:action]) }
