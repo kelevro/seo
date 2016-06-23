@@ -6,7 +6,7 @@ module Seo
         @seo      = if seo_model.present?
                       seo_model.record(params)
                     else
-                      Seo::Page.create_seo(params).seo_records
+                      Seo::Page.create_seo(params).seo_records.first
                     end
       end
     end
