@@ -30,7 +30,8 @@
     private
 
     def page_params
-      seo = Seo::Record.globalize_attribute_names + [:id]
-      params.require(:page).permit(:name, seo_records_attributes: seo)
+      seo_params = [translations_attributes: [:id, :locale, :title, :description,
+                                              :keywords, :seo_text]]
+      params.require(:page).permit(:name, seo_records_attributes: [:id, *seo_params])
     end
   end
