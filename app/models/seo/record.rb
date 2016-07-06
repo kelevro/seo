@@ -15,10 +15,11 @@
 module Seo
   class Record < ::ActiveRecord::Base
     translates :title, :description, :keywords, :seo_text
-    globalize_accessors
 
     before_validation :add_validators
     after_validation :clear_validators
+
+    accepts_nested_attributes_for :translations
 
     scope :action, -> (action) do
       where(action: action).order(:id) if action.present?

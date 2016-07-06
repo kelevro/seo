@@ -2,11 +2,11 @@
   <%= f.input :title %>
   <%= f.input :content %>
   <div class="col-sm-offset-1">
-    <%= f.simple_fields_for :seo do |seo_form| %>
-      <%= multilang_wrapper(:title) { |attribute| seo_form.input attribute } %>
-      <%= multilang_wrapper(:description) { |attribute| seo_form.input attribute, as: :text } %>
-      <%= multilang_wrapper(:keywords) { |attribute| seo_form.input attribute } %>
-      <%= multilang_wrapper(:seo_text) { |attribute| seo_form.input attribute, as: :text } %>
+    <%= f.simple_fields_for :seo_records do |seo_form| %>
+        <%= multilang_wrapper(seo_form, :title) { |tf, label| tf.input(:title, label: label) } %>
+        <%= multilang_wrapper(seo_form, :description) { |tf, label| tf.input(:description, label: label, as: :text) } %>
+        <%= multilang_wrapper(seo_form, :keywords) { |tf, label| tf.input(:keywords, label: label) } %>
+        <%= multilang_wrapper(seo_form, :seo_text) { |tf, label| tf.input(:seo_text, label:label, as: :text) } %>
     <% end %>
   </div>
 

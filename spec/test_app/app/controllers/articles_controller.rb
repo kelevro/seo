@@ -29,6 +29,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
+    load_seo(@article)
   end
 
   # POST /articles
@@ -65,8 +66,9 @@ class ArticlesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def article_params
-    seo_params = Seo::Record.globalize_attribute_names + [:id]
+    seo_params = [translations_attributes: [:id, :locale, :title, :description,
+                                            :keywords, :seo_text]]
     params.require(:article).permit(:title, :content,
-                                    seo_attributes: seo_params)
+                                    seo_records_attributes: [:id, *seo_params])
   end
 end

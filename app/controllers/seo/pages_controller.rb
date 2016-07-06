@@ -8,7 +8,7 @@
     def edit
       @page = Seo::Page.find(params[:id])
       @page.create_seo
-      @seo = @page.seo_records.first
+      load_seo(@page)
       add_breadcrumb @page.name
     end
 

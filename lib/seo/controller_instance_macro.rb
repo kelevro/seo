@@ -6,11 +6,11 @@ module Seo
 
     def load_seo(model)
       model.create_seo
-      @seo = model.seo_records.action(params[:seo_action]).first
-      if @seo.blank?
-        @seo = model.seo_records.first
+      @current_seo_model = model.seo_records.action(params[:seo_action]).first
+      if @current_seo_model.blank?
+        @current_seo_model = model.seo_records.first
         if params[:seo_action].present?
-          @seo = model.seo_records.select do |seo|
+          @current_seo_model = model.seo_records.select do |seo|
             seo.action == params[:seo_action]
           end.first
         end

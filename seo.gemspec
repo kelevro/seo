@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version     = Seo::VERSION
   s.authors     = ['Anton Holovko']
   s.email       = ['anton.holovko.b@gmail.com']
-  s.homepage    = 'localhost:3000'
+  s.homepage    = 'https://github.com/kelevro/seo'
   s.summary     = 'Simple assign seo meta-data'
   s.description = 'Simple assign seo meta-data'
   s.license     = 'MIT'
@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails'
   s.add_dependency 'globalize'
-  s.add_dependency 'globalize-accessors'
   s.add_dependency 'slim'
   s.add_dependency 'meta-tags'
   s.add_dependency 'sass-rails'

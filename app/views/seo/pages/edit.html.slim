@@ -3,9 +3,9 @@
 
   = simple_form_for @page do |f|
     = f.input :name
-    = f.simple_fields_for :seo_records, @seo do |sf|
-      = multilang_wrapper(:title) { |attr| sf.input attr }
-      = multilang_wrapper(:description) { |attr| sf.input attr, as: :text }
-      = multilang_wrapper(:keywords) { |attr| sf.input attr }
-      = multilang_wrapper(:seo_text) { |attr| sf.input attr, as: :text }
+    = f.simple_fields_for :seo_records, @current_seo_model do |sf|
+      = multilang_wrapper(f, :title) { |tf, label| tf.input(:title, label: label) }
+      = multilang_wrapper(f, :description) { |tf, label| tf.input(:description, label: label, as: :text) }
+      = multilang_wrapper(f, :keywords) { |tf, label| tf.input(:keywords, label: label) }
+      = multilang_wrapper(f, :seo_text) { |tf, label| tf.input(:seo_text, label:label, as: :text) }
       = f.submit 'Save', class: 'btn btn-success'
