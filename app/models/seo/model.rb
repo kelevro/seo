@@ -40,8 +40,9 @@ module Seo
         query_param[:id] = param.to_i
       end
 
-      model_class.find_by(query_param)
-        .seo_records.action(params[:action]).first
+      target_model = model_class.find_by(query_param)
+      return if target_model.nil?
+      target_model.seo_records.action(params[:action]).first
     end
 
     def static_page?
