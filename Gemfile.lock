@@ -29,7 +29,7 @@ GIT
 PATH
   remote: .
   specs:
-    seo (0.0.9)
+    seo (0.0.10)
       bootstrap-sass
       breadcrumbs_on_rails
       font-awesome-sass
